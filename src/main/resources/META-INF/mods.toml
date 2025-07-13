@@ -9,5 +9,6 @@ version = "${version}"
 displayName = "Fluidium"
 authors = "Kall"
 description = '''
+Reduce fluid ticks.
 '''
 #logoFile = ""

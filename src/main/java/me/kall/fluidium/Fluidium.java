@@ -1,36 +1,34 @@
 package me.kall.fluidium;
 
+import me.kall.fluidium.common.config.FluidiumConfig;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.fml.common.Mod;
-import org.jetbrains.annotations.NotNull;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+
+import java.util.List;
 
 @Mod(Fluidium.MOD_ID)
 public final class Fluidium {
     public static final String MOD_ID = "fluidium";
 
-    private static double getNearestPlayerDistSq(@NotNull ServerLevel level, BlockPos pos) {
-        double minDistSq = Double.MAX_VALUE;
+    public Fluidium(FMLJavaModLoadingContext context) {
+        context.registerConfig(ModConfig.Type.COMMON, FluidiumConfig.INSTANCE);
+    }
 
-        for (ServerPlayer player : level.players()) {
+    public static boolean shouldOptimize(List<ServerPlayer> players, BlockPos pos, int optDist) {
+        if (optDist <= 0) return false;
+        double thresholdSq = optDist * optDist;
+        for (ServerPlayer player : players) {
             double dx = player.getX() - pos.getX();
             double dy = player.getY() - pos.getY();
             double dz = player.getZ() - pos.getZ();
             double distSq = dx * dx + dy * dy + dz * dz;
-
-            if (distSq < minDistSq) minDistSq = distSq;
+            if (distSq <= thresholdSq) {
+                return false;
+            }
         }
-
-        return minDistSq;
-    }
-
-    public static boolean shouldOptimize(ServerLevel level, BlockPos pos, int optDist) {
-        if (optDist <= 0) return false;
-
-        double distSq = getNearestPlayerDistSq(level, pos);
-        double thresholdSq = optDist * optDist;
-
-        return distSq > thresholdSq;
+        return true;
     }
 }
