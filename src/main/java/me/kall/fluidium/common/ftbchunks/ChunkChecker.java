@@ -6,7 +6,7 @@ import dev.ftb.mods.ftblibrary.math.ChunkDimPos;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 
-public class ChunkChecker implements IChunkChecker{
+public class ChunkChecker implements IChunkChecker {
     @Override
     public boolean isClaimed(ServerLevel level, BlockPos pos) {
         FTBChunksAPI.API api = FTBChunksAPI.api();
