@@ -34,6 +34,8 @@ public abstract class ServerLevelMixin extends Level {
 
     @Inject(method = "tickFluid", at = @At("HEAD"), cancellable = true)
     private void fluidium$onTick(BlockPos pos, Fluid fluid, CallbackInfo ci) {
+        if (Fluidium.CHECKER.isClaimed((ServerLevel) (Object) this, pos)) return;
+
         int fluidDelay = fluid.getTickDelay(this);
 
         if (Fluidium.shouldOptimize(this.players(), pos, FluidiumConfig.OPT_DIST.get()) && ThreadLocalRandom.current().nextFloat(0.0F, 1.0F) < FluidiumConfig.TICK_CHANCE.get().floatValue()) {

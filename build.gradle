@@ -44,6 +44,8 @@ dependencies {
         parchment("org.parchmentmc.data:parchment-${project.minecraft_version}:${project.parchment_version}@zip")
     }
     forge "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
+    modImplementation("curse.maven:ftb-chunks-forge-314906:6431735")
+    modImplementation("curse.maven:ftb-library-forge-404465:6164053")
 }
 
 processResources {
