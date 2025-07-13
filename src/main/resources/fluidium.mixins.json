@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "package": "me.kall.fluidium.common.mixin",
+  "plugin": "me.kall.fluidium.common.mixin.MixinConfigPlugin",
+  "compatibilityLevel": "JAVA_8",
+  "overwrites": {
+    "conformVisibility": false
+  },
+  "minVersion": "0.8",
+  "client": [
+  ],
+  "mixins": [
+    "FlowingFluidMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
