@@ -5,6 +5,7 @@ import me.kall.fluidium.common.ftbchunks.ChunkChecker;
 import me.kall.fluidium.common.ftbchunks.FakeChecker;
 import me.kall.fluidium.common.ftbchunks.IChunkChecker;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -36,5 +37,10 @@ public final class Fluidium {
             }
         }
         return true;
+    }
+
+    public static boolean isChunkForced(BlockPos pos, @NotNull ServerLevel level) {
+        long chunkPos = level.getChunkAt(pos).getPos().toLong();
+        return level.getForcedChunks().contains(chunkPos);
     }
 }

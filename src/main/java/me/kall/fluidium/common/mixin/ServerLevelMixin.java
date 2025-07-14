@@ -34,7 +34,8 @@ public abstract class ServerLevelMixin extends Level {
 
     @Inject(method = "tickFluid", at = @At("HEAD"), cancellable = true)
     private void fluidium$onTick(BlockPos pos, Fluid fluid, CallbackInfo ci) {
-        if (Fluidium.CHECKER.isClaimed((ServerLevel) (Object) this, pos)) return;
+        ServerLevel level = (ServerLevel) (Object) this;
+        if (Fluidium.CHECKER.isClaimed(level, pos) || Fluidium.isChunkForced(pos, level)) return;
 
         int fluidDelay = fluid.getTickDelay(this);
 
