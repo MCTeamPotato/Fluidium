@@ -2,6 +2,7 @@ package me.kall.fluidium.common.mixin;
 
 import me.kall.fluidium.Fluidium;
 import me.kall.fluidium.common.config.FluidiumConfig;
+import me.kall.fluidium.common.integration.ClaimManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
@@ -35,7 +36,7 @@ public abstract class ServerLevelMixin extends Level {
     @Inject(method = "tickFluid", at = @At("HEAD"), cancellable = true)
     private void fluidium$onTick(BlockPos pos, Fluid fluid, CallbackInfo ci) {
         ServerLevel level = (ServerLevel) (Object) this;
-        if (Fluidium.CHECKER.isClaimed(level, pos) || Fluidium.isChunkForced(pos, level)) return;
+        if (ClaimManager.isClaimed(level, pos) || Fluidium.isChunkForced(pos, level)) return;
 
         int fluidDelay = fluid.getTickDelay(this);
 
