@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
@@ -24,9 +25,9 @@ import java.util.List;
 public final class Fluidium {
     public static final String MOD_ID = "fluidium";
 
-    public Fluidium(@NotNull FMLJavaModLoadingContext context) {
-        context.registerConfig(ModConfig.Type.COMMON, FluidiumConfig.INSTANCE);
-        IEventBus modBus = context.getModEventBus();
+    public Fluidium() {
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, FluidiumConfig.INSTANCE);
+        IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         modBus.addListener((FMLCommonSetupEvent event) -> event.enqueueWork(() -> updateFluidTickable(true)));
         modBus.addListener((ModConfigEvent.Reloading event) -> updateFluidTickable(event.getConfig().getModId().equals(MOD_ID)));
     }
