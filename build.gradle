@@ -161,7 +161,7 @@ tasks.register("publishCurseForge", TaskPublishCurseForge) {
     mainFile.addJavaVersion(javaVersions)
     mainFile.addGameVersion(minecraft_version)
     if (claimIntegration) {
-        mainFile.addOptional("ftb-chunks")
+        mainFile.addOptional("ftb-chunks-forge")
         if (!isOld) mainFile.addOptional("open-parties-and-claims")
     }
     if (embeddiumIntegration) {
