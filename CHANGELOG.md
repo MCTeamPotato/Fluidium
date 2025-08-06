@@ -1,3 +1,2 @@
-# 1.3.0
-- Add blacklist(registry name/ mod id)
-- Support config reload
+# 1.3.1
+- Speedup config update
