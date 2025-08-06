@@ -28,7 +28,7 @@ public abstract class ServerLevelMixin {
 
         int fluidDelay = fluid.getTickDelay(level);
 
-        if (Fluidium.shouldOptimize(this.players(), pos, FluidiumConfig.OPT_DIST.get()) && ThreadLocalRandom.current().nextFloat(0.0F, 1.0F) < FluidiumConfig.TICK_CHANCE.get().floatValue()) {
+        if (Fluidium.shouldOptimize(this.players(), pos, FluidiumConfig.OPT_DIST.get()) && ThreadLocalRandom.current().nextFloat() < FluidiumConfig.TICK_CHANCE.get().floatValue()) {
             level.scheduleTick(pos, fluid, fluidDelay);
             ci.cancel();
         }
