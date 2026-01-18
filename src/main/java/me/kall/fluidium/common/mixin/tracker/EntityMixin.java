@@ -8,6 +8,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Entity.class)
 public class EntityMixin {
-    @Inject(method = "setPosRaw", at = @At("HEAD")) protected void beforePosChange(CallbackInfo ci) {}
-    @Inject(method = "setPosRaw", at = @At("TAIL")) protected void afterPosChange(CallbackInfo ci) {}
+    @Inject(method = "setPosRaw", at = @At("HEAD")) protected void fluidium$beforePosChange(CallbackInfo ci) {}
+    @Inject(method = "setPosRaw", at = @At("TAIL")) protected void fluidium$afterPosChange(CallbackInfo ci) {}
 }

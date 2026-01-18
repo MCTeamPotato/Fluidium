@@ -41,6 +41,13 @@ public class ActiveChunks {
     }
 
     @SubscribeEvent
+    public static void logout(PlayerEvent.@NotNull PlayerLoggedOutEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) {
+            player.server.execute(() -> UPDATE_REQUIRED.add(player.level().dimension().location()));
+        }
+    }
+
+    @SubscribeEvent
     public static void tickLevel(TickEvent.@NotNull LevelTickEvent event) {
         if (event.phase != TickEvent.Phase.START || event.side != LogicalSide.SERVER) return;
         Level level = event.level;

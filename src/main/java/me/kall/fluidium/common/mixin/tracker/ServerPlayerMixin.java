@@ -11,33 +11,33 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ServerPlayer.class)
 public abstract class ServerPlayerMixin extends EntityMixin {
-    @Unique protected int dpt$lastHeight = Integer.MAX_VALUE;
-    @Unique private long dpt$lastChunk;
+    @Unique protected int fluidium$lastHeight = Integer.MAX_VALUE;
+    @Unique private long fluidium$lastChunk;
 
     @Override
-    protected void beforePosChange(CallbackInfo ci) {
+    protected void fluidium$beforePosChange(CallbackInfo ci) {
         ServerPlayer player = (ServerPlayer) (Object) this;
         try {
-            this.dpt$lastChunk = Positions.toChunk(player.blockPosition());
+            this.fluidium$lastChunk = Positions.toChunk(player.blockPosition());
         } catch (Throwable ignored) {}
     }
 
     @Override
-    protected void afterPosChange(CallbackInfo ci) {
+    protected void fluidium$afterPosChange(CallbackInfo ci) {
         ServerPlayer player = (ServerPlayer) (Object) this;
         try {
             int currentHeight = player.getBlockY();
             MinecraftServer server = player.server;
             if (server == null) return;
             ResourceLocation dim = player.level().dimension().location();
-            if (Math.abs(currentHeight - this.dpt$lastHeight) >= 4) {
+            if (Math.abs(currentHeight - this.fluidium$lastHeight) >= 4) {
                 server.execute(() -> ActiveChunks.UPDATE_REQUIRED.add(dim));
-                this.dpt$lastHeight = currentHeight;
+                this.fluidium$lastHeight = currentHeight;
                 return;
             }
 
             long currentChunk = Positions.toChunk(player.blockPosition());
-            if (this.dpt$lastChunk != currentChunk) {
+            if (this.fluidium$lastChunk != currentChunk) {
                 server.execute(() -> ActiveChunks.UPDATE_REQUIRED.add(dim));
             }
         } catch (Throwable ignored) {}
