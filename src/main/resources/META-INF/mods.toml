@@ -12,3 +12,10 @@ description = '''
 Reduce fluid ticks.
 '''
 #logoFile = ""
+
+[[dependencies.fluidium]]
+modId="duplicationless"
+mandatory=true
+versionRange="[1.1.5,)"
+ordering="NONE"
+side="BOTH"

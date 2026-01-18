@@ -1,26 +1,25 @@
 package me.kall.fluidium.common.config;
 
-import com.google.common.base.Predicates;
-import com.google.common.collect.Lists;
-import net.minecraftforge.common.ForgeConfigSpec;
+import me.kall.duplicationless.config.JsonConfig;
+import me.kall.fluidium.Fluidium;
+import net.minecraft.resources.ResourceLocation;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class FluidiumConfig {
-    public static final ForgeConfigSpec INSTANCE;
+    private static final JsonConfig CONFIG = JsonConfig.create(Fluidium.MOD_ID, "1")
+            .put("HorizontalChunkRadius", 2)
+            .put("VerticalChunkRadius", 1)
+            .put("FluidTickDelayChance", 0.50)
+            .put("FluidsThatAlwaysTick(RegistryName)", new ArrayList<>())
+            .put("FluidsThatAlwaysTick(ModID)", new ArrayList<>())
+            .initialize();
 
-    public static final ForgeConfigSpec.IntValue OPT_DIST;
-    public static final ForgeConfigSpec.DoubleValue TICK_CHANCE;
-    public static final ForgeConfigSpec.ConfigValue<List<? extends String>> BLACKLIST, MOD_ID_LIST;
-
-    static {
-        ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
-        builder.push("Fluidium");
-        OPT_DIST = builder.defineInRange("FluidOptimizableDist", 32, 0, 63);
-        TICK_CHANCE = builder.defineInRange("FluidTickDelayChance", 0.50, 0.00, 1.00);
-        BLACKLIST = builder.defineList("FluidsAlwaysTick(RegistryName)", Lists.newArrayList(), Predicates.alwaysTrue());
-        MOD_ID_LIST = builder.defineList("FluidsAlwaysTick(ModID)", Lists.newArrayList(), Predicates.alwaysTrue());
-        builder.pop();
-        INSTANCE = builder.build();
-    }
+    public static final int HORIZONTAL_CHUNK_RADIUS = CONFIG.getInt("HorizontalChunkRadius");
+    public static final int VERTICAL_CHUNK_RADIUS = CONFIG.getInt("VerticalChunkRadius");
+    public static final float DELAY_CHANCE = (float) CONFIG.getDouble("FluidTickDelayChance");
+    public static final Set<ResourceLocation> ALWAYS_TICK_FLUIDS = CONFIG.getStream("FluidsThatAlwaysTick(RegistryName)", String.class).map(ResourceLocation::parse).collect(Collectors.toSet());
+    public static final Set<String> ALWAYS_TICK_MODS = CONFIG.getSet("FluidsThatAlwaysTick(ModID)", String.class);
 }

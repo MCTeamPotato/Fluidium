@@ -1,2 +1,3 @@
-# 1.3.1
-- Speedup config update
+# 1.4.0
+- Use Duplicationless Config API
+- Optimize distance check logic

@@ -10,7 +10,9 @@
   ],
   "mixins": [
     "FluidMixin",
-    "ServerLevelMixin"
+    "ServerLevelMixin",
+    "tracker.EntityMixin",
+    "tracker.ServerPlayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
