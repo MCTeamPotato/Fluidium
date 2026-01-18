@@ -28,29 +28,32 @@ public class ActiveChunks {
 
     @SubscribeEvent
     public static void login(PlayerEvent.@NotNull PlayerLoggedInEvent event) {
-        if (event.getEntity() instanceof ServerPlayer player) {
-            player.server.execute(() -> UPDATE_REQUIRED.add(player.level().dimension().location()));
+        if (event.getEntity() instanceof ServerPlayer) {
+            ServerPlayer player = (ServerPlayer)event.getEntity() ;
+            player.server.execute(() -> UPDATE_REQUIRED.add(player.level.dimension().location()));
         }
     }
 
     @SubscribeEvent
     public static void dimChange(PlayerEvent.@NotNull PlayerChangedDimensionEvent event) {
-        if (event.getEntity() instanceof ServerPlayer player) {
+        if (event.getEntity() instanceof ServerPlayer) {
+            ServerPlayer player = (ServerPlayer)event.getEntity() ;
             player.server.execute(() -> UPDATE_REQUIRED.add(event.getTo().location()));
         }
     }
 
     @SubscribeEvent
     public static void logout(PlayerEvent.@NotNull PlayerLoggedOutEvent event) {
-        if (event.getEntity() instanceof ServerPlayer player) {
-            player.server.execute(() -> UPDATE_REQUIRED.add(player.level().dimension().location()));
+        if (event.getEntity() instanceof ServerPlayer) {
+            ServerPlayer player = (ServerPlayer)event.getEntity() ;
+            player.server.execute(() -> UPDATE_REQUIRED.add(player.level.dimension().location()));
         }
     }
 
     @SubscribeEvent
-    public static void tickLevel(TickEvent.@NotNull LevelTickEvent event) {
+    public static void tickLevel(TickEvent.WorldTickEvent event) {
         if (event.phase != TickEvent.Phase.START || event.side != LogicalSide.SERVER) return;
-        Level level = event.level;
+        Level level = event.world;
         ResourceLocation dimID = level.dimension().location();
 
         if (!UPDATE_REQUIRED.remove(dimID)) return;
@@ -64,7 +67,7 @@ public class ActiveChunks {
         for (Player player : level.players()) {
             int chunkX = player.blockPosition().getX() >> 4;
             int chunkZ = player.blockPosition().getZ() >> 4;
-            int y = player.getBlockY();
+            int y = player.blockPosition().getY();
             int minY = y - height;
             int maxY = y + height;
 

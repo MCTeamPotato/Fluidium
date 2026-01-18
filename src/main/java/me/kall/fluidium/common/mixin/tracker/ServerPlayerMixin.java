@@ -26,10 +26,10 @@ public abstract class ServerPlayerMixin extends EntityMixin {
     protected void fluidium$afterPosChange(CallbackInfo ci) {
         ServerPlayer player = (ServerPlayer) (Object) this;
         try {
-            int currentHeight = player.getBlockY();
+            int currentHeight = player.blockPosition().getY();
             MinecraftServer server = player.server;
             if (server == null) return;
-            ResourceLocation dim = player.level().dimension().location();
+            ResourceLocation dim = player.level.dimension().location();
             if (Math.abs(currentHeight - this.fluidium$lastHeight) >= 4) {
                 server.execute(() -> ActiveChunks.UPDATE_REQUIRED.add(dim));
                 this.fluidium$lastHeight = currentHeight;
