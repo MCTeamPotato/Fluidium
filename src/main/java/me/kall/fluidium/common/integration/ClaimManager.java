@@ -4,7 +4,7 @@ import me.kall.fluidium.common.integration.ftbchunks.FTBChecker;
 import me.kall.fluidium.common.integration.openpartiesandclaims.OPACChecker;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.loading.FMLLoader;
+import net.neoforged.fml.loading.FMLLoader;
 import org.jetbrains.annotations.Nullable;
 
 public class ClaimManager {
